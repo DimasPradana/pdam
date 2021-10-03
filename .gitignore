@@ -3,3 +3,5 @@
 /public/
 .env
 *.htaccess
+.idea
+.editorconfig
