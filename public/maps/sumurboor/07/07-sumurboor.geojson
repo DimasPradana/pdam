@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "01-sumurboor",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "PDAM": "ARJASA", "NAMA_SUMUR": "ARJASA", "ALAMAT": "JL. LETNAN NIDIN", "ALAMAT_1": "ARJASA", "STATUS": "AKTIF", "TAHUN": null, "KAP. POMPA": null, "DAYA": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 114.121338660393704, -7.726869650817784 ], [ 114.121530889055165, -7.726907216352759 ], [ 114.121504707793108, -7.727042960668463 ], [ 114.12128518930723, -7.726990345033033 ], [ 114.121338660393704, -7.726869650817784 ] ] ] ] } }
+]
+}
