@@ -1,21 +1,7 @@
 <x-app-layout>
 {{--                TODO snub ditaruh di app.blade headernya --}}
-{{--    <div class="py-12">--}}
-{{--        <div class="ml-4 mr-4 px-2">--}}
-{{--            <div class="bg-white dark:bg-red-600 overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 bg-white dark:bg-green-800">--}}
-{{--                    ini dari dashboard--}}
-{{--                    --}}{{--                    TODO coba ambil dari database--}}
-{{--                    --}}{{--                    @foreach($hasilUsers as $hasilUser)--}}
-{{--                    --}}{{--                        <br />{{$hasilUser->name}}--}}
-{{--                    --}}{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
 @push('headPeta')
-    {{--        <script>console.log('dari dashboard')</script>--}}
 
     <!-- leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -109,20 +95,26 @@
 
     @push('peta')
         {{--    petanya--}}
-{{--        <script src="{{ URL::asset('public/js/peta.js') }}"></script> --}}
-         {{-- @hasanyrole('Super Admin|roleUnit1') --}}
-           {{-- <script src="{{ URL::asset('public/js/peta/petaSitubondo.js') }}"></script> --}}
-           {{-- {{-- <script>console.log('superadmin atau situbondo 1')</script> --}} --}}
-         {{-- @else  --}}
-           {{-- <script>console.log('tidak ada role')</script> --}}
-         {{-- @endhasanyrole --}}
-        @can('situbondo.create','situbondo.read','situbondo.update','situbondo.delete')
-          <script src="{{ URL::asset('public/js/peta/petaSitubondo.js') }}"></script>
-          {{-- <script>console.log('superadmin atau situbondo 1')</script> --}}
-        @endcan
-        @can('arjasa.create','arjasa.read','arjasa.update','arjasa.delete')
-          <script src="{{ URL::asset('public/js/peta/petaArjasa.js') }}"></script>
-        @endcan
+        <script src="{{ URL::asset('public/js/peta.js') }}"></script>
+         {{--@hasanyrole('Super Admin|kepala|hl|roleUnit1')--}}
+          {{--<script src="{{ URL::asset('public/js/peta/petaSitubondo.js') }}"></script>--}}
+          {{--<script>console.debug('superadmin atau situbondo 1')</script>--}}
+         {{--@else--}}
+          {{--<script>console.log('tidak ada role')</script>--}}
+         {{--@endhasanyrole--}}
+         {{--@hasanyrole('Super Admin|kepala|hl|roleUnit2')--}}
+          {{--<script src="{{ URL::asset('public/js/peta/petaArjasa.js') }}"></script>--}}
+          {{--<script>console.debug('superadmin atau arjasa')</script>--}}
+         {{--@else--}}
+          {{--<script>console.log('tidak ada role')</script>--}}
+         {{--@endhasanyrole--}}
+        {{-- @can('situbondo.create','situbondo.read','situbondo.update','situbondo.delete') --}} 
+          {{-- <script src="{{ URL::asset('public/js/peta/petaSitubondo.js') }}"></script> --}} 
+          {{-- <script>console.log('superadmin atau situbondo 1')</script> --}} 
+        {{-- @endcan --}} 
+        {{-- @can('arjasa.create','arjasa.read','arjasa.update','arjasa.delete') --}} 
+          {{-- <script src="{{ URL::asset('public/js/peta/petaArjasa.js') }}"></script> --}} 
+        {{-- @endcan --}} 
     @endpush
 
 

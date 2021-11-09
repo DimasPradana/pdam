@@ -1,15 +1,22 @@
-7// disable right click
+/**
+ TODO  on Tue 09 Nov 2021 19:19:24
+  ᚛ sumur boor
+  ᚛ fitur search
+  ᚛ measure
+  ᚛ gate valve
+  ᚛ streetview
+*/
+
+// {{{ disable right click
 document.addEventListener("contextmenu", function (e) {
-    // {{{
     e.preventDefault();
 }); // }}}
 
-// disable F12
+// {{{ disable F12
 document.onkeydown = function (e) {
-    // {{{
-    // if (event.keyCode == 123) {
-    //     return false;
-    // }
+    if (e.keyCode == 123) {
+        return false;
+    }
     if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
         return false;
     }
@@ -27,128 +34,247 @@ document.onkeydown = function (e) {
     }
 }; // }}}
 
-// var map = L.map('map').setView([-7.700935688163334, 114.02025856339858], 11);
+// {{{ variable
+var jsonPipa1 = window.pipa1;
+var jsonPipa1Setengah = window.pipa1Setengah;
+var jsonPipa2 = window.pipa2;
+var jsonPipa3 = window.pipa3;
+var jsonPipa4 = window.pipa4;
+var jsonPipa6 = window.pipa6;
+var jsonPipa8 = window.pipa8;
+var jsonPipa12 = window.pipa12;
+var jsonPelanggan = window.pelanggan;
+/* var kumpulanpelanggan = L.markerClusterGroup(); */
+/* console.debug(jsonPelanggan); */
+// }}}
 
-function showCoordinates(e) {
-    // {{{
-    // alert(e.latlng);
-    let lat = e.latlng.lat;
-    let long = e.latlng.lng;
-    // alert('lat: '+lat+', long: '+long)
-    // window.open('http://maps.google.com/maps?q=&layer=c&cbll='+lat+','+long+'&cbp=11,0,0,0,0', '_blank');
-    window.open(
-        "http://maps.google.com/maps?q=&layer=c&cbll=" +
-        lat +
-        "," +
-        long +
-        "&cbp=11,0,0,0,0"
-    );
-    // http://maps.google.com/maps?q=&layer=c&cbll=31.335198,-89.287204&cbp=11,0,0,0,0
-} // }}}
+// {{{ progres bar di console
+let progress;
+function updateProgressBar(processed, total, elapsed) {
+    if (elapsed > 1000) {
+        // if it takes more than a second to load, display the progress bar:
+        progress = Math.round((processed / total) * 100) + "%";
+        console.debug("me-load data pelanggan: ", progress);
+    }
 
-function m_style_pipadist_110(f) {
-    // {{{
-    return {
-        fillColor: "white",
-        fillOpacity: 0.2,
-        color: "#DC2626",
-        dashArray: "",
-        weight: 3,
-        opacity: 0.7,
-    };
-} // }}}
-
-function m_style_pipadist_160(f) {
-    // {{{
-    return {
-        fillColor: "white",
-        fillOpacity: 0.2,
-        color: "#3B82F6",
-        dashArray: "",
-        weight: 5,
-        opacity: 0.7,
-    };
-} // }}}
-
-function m_style_pipapelayanan(f) {
-    // {{{
-    return {
-        // fillColor: 'white',
-        fillOpacity: 0.2,
-        // color: 'green',
-        // color: '#D97706',
-        color: "#4caf50",
-        dashArray: "",
-        weight: 2,
-        opacity: 0.7,
-    };
-} // }}}
-
-function m_style_sumurboor(f) {
-    // {{{
-    return {
-        fillColor: "red",
-        fillOpacity: 0.2,
-        color: "#F472B6",
-        dashArray: "",
-        weight: 2,
-        opacity: 0.7,
-    };
-} // }}}
-
-// Export to GeoJSON File
-function geojsonExport() {
-    // {{{
-    let nodata = '{"type":"FeatureCollection","features":[]}';
-    let jsonData = JSON.stringify(drawnItems.toGeoJSON());
-    let dataUri =
-        "data:application/json;charset=utf-8," + encodeURIComponent(jsonData);
-    let datenow = new Date();
-    let datenowstr = datenow.toLocaleDateString("id-ID");
-    let exportFileDefaultName = "export_draw_" + datenowstr + ".geojson";
-    let linkElement = document.createElement("a");
-    linkElement.setAttribute("href", dataUri);
-    linkElement.setAttribute("download", exportFileDefaultName);
-    if (jsonData == nodata) {
-        alert("No features are drawn");
-    } else {
-        linkElement.click();
+    if (processed === total) {
+        // all pelanggan processed - hide the progress bar:
+        console.debug("data pelanggan berhasil di load: ", processed);
     }
 } // }}}
 
-function centerMap(e) {
-    // {{{
-    m.panTo(e.latlng);
+// {{{ ikon
+var ikon = L.Icon.extend({
+    options: {
+        iconSize: [50, 50],
+    },
+});
+
+var waterMeter = new ikon({
+    iconUrl: "public/images/waterMeter.png",
+}); // }}}
+
+// {{{ overlayMaps pipa1
+var pipa1 = L.geoJSON(jsonPipa1, {
+    style: function (feature) {
+        return { color: "#5f92b8" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa1Setengah
+var pipa1Setengah = L.geoJSON(jsonPipa1Setengah, {
+    style: function (feature) {
+        return { color: "#00b4b7" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa2
+var pipa2 = L.geoJSON(jsonPipa2, {
+    style: function (feature) {
+        return { color: "#ffdd43" };
+        // return layer.feature.properties.color // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa3
+var pipa3 = L.geoJSON(jsonPipa3, {
+    style: function (feature) {
+        return { color: "#04ff00" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa4
+var pipa4 = L.geoJSON(jsonPipa4, {
+    style: function (feature) {
+        return { color: "#0400f8" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa6
+var pipa6 = L.geoJSON(jsonPipa6, {
+    style: function (feature) {
+        return { color: "#e59c00" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa8
+var pipa8 = L.geoJSON(jsonPipa8, {
+    style: function (feature) {
+        return { color: "#ff0000" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ overlayMaps pipa12
+var pipa12 = L.geoJSON(jsonPipa12, {
+    style: function (feature) {
+        return { color: "#ff7979" };
+        // return layer.feature.properties.color; // contoh
+    },
+}).bindPopup(function (layer) {
+    /* return layer.feature.properties.description; */
+    return layer.feature.properties.ukuran_pipa; // ukuran_pipa ini ambil dari kolom database
+}); // }}}
+
+// {{{ fungsi popUpPelanggan
+function popUpPelanggan(fNama, fSambungan, fLanggan, fAlamat, fUnit) {
+    let popupContent = "";
+
+    popupContent =
+        '<table>\
+                  <tr>\
+                    <th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI PELANGGAN </th>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">&nbsp; </th>\
+                  </tr>\
+                  <tr>\
+                     <th scope="row"></th>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">UNIT</th>\
+                    <td>' +
+        fUnit +
+        '</td>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">NAMA</th>\
+                    <td>' +
+        fNama +
+        '</td>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">NO SAMBUNGAN</th>\
+                    <td>' +
+        fSambungan +
+        '</td>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">NO LANGGANAN</th>\
+                    <td>' +
+        fLanggan +
+        '</td>\
+                  </tr>\
+                  <tr>\
+                    <th scope="row">ALAMAT</th>\
+                    <td>' +
+        fAlamat +
+        "</td>\
+                  </tr>\
+                </table>";
+
+    return popupContent;
 } // }}}
 
-function zoomIn(e) {
-    // {{{
-    m.zoomIn();
+// {{{ pelanggan
+const pelanggan = L.markerClusterGroup({
+        chunkedLoading: true,
+        chunkProgress: updateProgressBar,
+    }),
+    groupPelanggan = L.featureGroup.subGroup(pelanggan);
+for (let i = 0; i < jsonPelanggan.features.length; i++) {
+    const atribut = jsonPelanggan.features[i].properties;
+    const geom = jsonPelanggan.features[i].geometry.coordinates;
+    const nama = atribut.namapelang,
+        sambungan = atribut.no_sambung,
+        langgan = atribut.no_langgan,
+        alamat = atribut.alamat,
+        unit = atribut.unit;
+    /* const marker = L.marker(new L.LatLng(geom[1], geom[0]), {textNama : nama, icon: waterMeter }); */
+    const marker = L.marker(new L.LatLng(geom[1], geom[0]), {
+        icon: waterMeter,
+    });
+    /* marker.bindPopup(nama); */
+    marker.bindPopup(popUpPelanggan(nama, sambungan, langgan, alamat, unit));
+    marker.addTo(groupPelanggan);
 } // }}}
 
-function zoomOut(e) {
-    // {{{
-    m.zoomOut();
-} // }}}
+// {{{ basemap
+var googleHybrid = L.tileLayer(
+    "http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+    {
+        maxZoom: 35,
+        subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        attribution: "Google Hybrid",
+    }
+);
 
-// function highlightFeature(e) {
-//     var layer = e.target;
+var osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 35,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Open Street Map",
+});
 
-//     layer.setStyle({
-//         weight: 5,
-//         color: '#fff',
-//         dashArray: '',
-//         fillOpacity: 0.7
-//     });
+var googleAltered = L.tileLayer(
+    "http://mt0.google.com/vt/lyrs=r&hl=en&x={x}&y={y}&z={z}",
+    {
+        maxZoom: 35,
+        subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        attribution: "Google Altered",
+    }
+);
 
-//     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-//         layer.bringToFront();
-//     }
-//     // console.log('halo');
-// }
+var googleMaps = L.tileLayer(
+    "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+    {
+        maxZoom: 35,
+        subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        attribution: "Google Maps",
+    }
+);
+// }}}
 
+// {{{ initialize map to m variable
 var m = L.map("mapid", {
-    // {{{
+    center: [-7.700935688163334, 114.02025856339858],
+    zoom: 11,
+    layers: [googleMaps],
     contextmenu: true,
     contextmenuWidth: 140,
     contextmenuItems: [
@@ -156,35 +282,30 @@ var m = L.map("mapid", {
             text: "Street View",
             callback: showCoordinates,
         },
-        {
-            text: "Export",
-            callback: geojsonExport,
-        },
-        // {
-        // 	text: 'Center Map',
-        // 	callback: centerMap
-        // },
-        // {
-        // 	text: 'Zoom in',
-        // 	callback: zoomIn
-        // },
-        // {
-        // 	text: 'Zoom out',
-        // 	callback: zoomOut
-        // }
     ],
-}).setView([-7.700935688163334, 114.02025856339858], 11); // }}}
-
-var baseMap = L.tileLayer("http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}", {
-    // {{{
-    maxZoom: 35,
-    subdomains: ["mt0", "mt1", "mt2", "mt3"],
-    attribution: "Google Hybrid",
 }); // }}}
-m.addLayer(baseMap);
 
-var kumpulanMarkers = L.markerClusterGroup();
+// {{{ panel layer baseMaps
+var baseMaps = {
+    "<span class= 'ml-2 mr-3'>Google Hybrid</span>": googleHybrid,
+    "<span class= 'ml-2 mr-3'>Google Streets</span>": googleAltered,
+    "<span class= 'ml-2 mr-3'>Google Maps</span>": googleMaps,
+    "<span class= 'ml-2 mr-3'>Open Street Map</span>": osm,
+}; // }}}
 
+// {{{ panel layer overlayMaps
+var overlayMaps = {
+    "<span class= 'ml-2 mr-3'>Pipa 1</span>": pipa1,
+    "<span class= 'ml-2 mr-3'>Pipa 1.5</span>": pipa1Setengah,
+    "<span class= 'ml-2 mr-3'>Pipa 2</span>": pipa2,
+    "<span class= 'ml-2 mr-3'>Pipa 3</span>": pipa3,
+    "<span class= 'ml-2 mr-3'>Pipa 4</span>": pipa4,
+    "<span class= 'ml-2 mr-3'>Pipa 6</span>": pipa6,
+    "<span class= 'ml-2 mr-3'>Pipa 8</span>": pipa8,
+    "<span class= 'ml-2 mr-3'>Pipa 12</span>": pipa12,
+}; // }}}
+
+// {{{ polylineMeasure
 var options = {
     // {{{
     position: "topleft", // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
@@ -268,421 +389,9 @@ var options = {
     },
 }; // }}}
 
-var ikon = L.Icon.extend({
-    options: {
-        iconSize: [50, 50],
-    },
-});
-
-var ikonKecil = L.Icon.extend({
-    options: {
-        iconSize: [24, 24],
-    },
-});
-
-var watertap = new ikon({
-        // {{{
-        iconUrl: "images/water-tap.png",
-    }),
-    recBlue = new ikon({
-        iconUrl: "images/recBlue.png",
-    }),
-    recGreen = new ikon({
-        iconUrl: "images/recGreen.png",
-    }),
-    recRed = new ikon({
-        iconUrl: "images/recRed.png",
-    }),
-    recYellow = new ikon({
-        iconUrl: "images/recYellow.png",
-    }),
-    waterMeter = new ikon({
-        iconUrl: "public/images/waterMeter.png",
-    }),
-    gateValve = new ikonKecil({
-        iconUrl: "public/images/gateValve.png",
-    }),
-    faucet = new ikon({
-        iconUrl: "images/faucet.png",
-    }),
-    saveWater = new ikon({
-        iconUrl: "images/save-water.png",
-    }); // }}}
-
-var baseLayers = [
-    //{{{
-    {
-        name: "Google Hybrid",
-        layer: baseMap,
-    },
-    {
-        name: "Open Street",
-        layer: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png"),
-    },
-    {
-        name: "Google Altered",
-        layer: L.tileLayer("http://mt0.google.com/vt/lyrs=r&hl=en&x={x}&y={y}&z={z}"),
-    },
-]; // }}}
-
-var overLayers = [
-    // {{{
-    {
-        group: 'Arjasa',
-        layers: [{
-            name: 'Pipa Pelayanan',
-            layer: new L.GeoJSON.AJAX(["public/maps/pipapelayanan/07/07-pipapelayanan.geojson"], {
-                style: m_style_pipapelayanan,
-                onEachFeature: function (feature, layer) {
-                    // console.log(Object.entries(feature.properties));
-                    layer.on({
-                        // mouseover: highlightFeature,
-                        mouseover: (e) => {
-                            if (layer == e.target) {
-                                // console.log('mouse over');
-                                layer.setStyle({
-                                    weight: 7,
-                                    color: '#0f0',
-                                    dashArray: '',
-                                    fillOpacity: 0.7
-                                });
-                            } else {
-                                console.log('tidak sama dengan layer');
-                            }
-                        },
-                        mouseout: (e) => {
-                            // let layerLocal = e.target;
-                            // layer.options.resetStyle(e.target);
-                            if (layer == e.target) {
-                                // console.log('mouse out');
-                                layer.setStyle({
-                                    // fillColor: 'white',
-                                    fillOpacity: 0.2,
-                                    // color: 'green',
-                                    // color: '#D97706',
-                                    color: '#4caf50',
-                                    dashArray: '',
-                                    weight: 2,
-                                    opacity: 0.7
-                                })
-                            } else {
-                                console.log('tidak sama dengan layer');
-                            }
-                        },
-                    });
-                    layer.bindPopup(popUpPipaPelayanan(feature, layer));
-                    // drawnItems.addLayer(layer); // buat editing gambar
-                }
-            })
-        },
-            {
-                name: 'Pipa Dist 110mm 4Inch',
-                layer: new L.GeoJSON.AJAX(["public/maps/pipadist/07/07-pipadist-110mm-4i.geojson"], {
-                    // }).addTo(map)
-                    style: m_style_pipadist_110,
-                    onEachFeature: function (feature, layer) {
-                        // console.log(Object.entries(feature.properties));
-                        layer.on({
-                            // mouseover: highlightFeature,
-                            mouseover: (e) => {
-                                if (layer == e.target) {
-                                    // console.log('mouse over');
-                                    layer.setStyle({
-                                        weight: 7,
-                                        color: '#0f0',
-                                        dashArray: '',
-                                        fillOpacity: 0.7
-                                    });
-                                } else {
-                                    console.log('tidak sama dengan layer');
-                                }
-                            },
-                            mouseout: (e) => {
-                                // let layerLocal = e.target;
-                                // layer.options.resetStyle(e.target);
-                                if (layer == e.target) {
-                                    // console.log('mouse out');
-                                    layer.setStyle({
-                                        fillColor: 'white',
-                                        fillOpacity: 0.2,
-                                        color: '#DC2626',
-                                        dashArray: '',
-                                        weight: 3,
-                                        opacity: 0.7
-                                    })
-                                } else {
-                                    console.log('tidak sama dengan layer');
-                                }
-                            },
-                        });
-                        layer.bindPopup(popUpPipaDist(feature, layer));
-                    }
-                })
-            },
-            {
-                name: 'Sumur Boor',
-                layer: new L.GeoJSON.AJAX(["public/maps/sumurboor/07/07-sumurboor.geojson"], {
-                    style: m_style_sumurboor,
-                    onEachFeature: function (feature, layer) {
-                        layer.bindPopup(popUpSumurboor(feature, layer));
-                    }
-                })
-            },
-            {
-                name: 'Pelanggan Wil I',
-                layer: new L.GeoJSON.AJAX(["public/maps/pelanggan/07/07-pelanggan.geojson"], {
-                    pointToLayer: clusterPelanggan,
-                    onEachFeature: function (feature, layer) {
-                        // layer.bindPopup('Nama Pelanggan : ' + feature.properties.NAMAPELANG);
-                        layer.bindPopup(popUpPelanggan(feature, layer));
-                    }
-                }).on('data:loaded', function (event) {
-                    m.spin(false);
-                    console.log('Arjasa I : load success');
-                })
-            }
-        ]
-    },
-]; // }}}
-
-function clusterPelanggan(f, l) {
-    // {{{
-    let tanda = new L.marker(
-        [f.geometry.coordinates[1], f.geometry.coordinates[0]],
-        {
-            icon: waterMeter,
-        }
-    );
-    var titik = L.featureGroup.subGroup(kumpulanMarkers);
-    return titik.addLayer(tanda);
-} // }}}
-
-function popUpPelanggan(feature, layer) {
-    // {{{
-    var popupContent = "";
-
-    var fNama = feature.properties.NAMAPELANG || feature.properties.nama;
-    var fNoSambungan =
-        feature.properties.NO_SAMBUNG || feature.properties.nosambunga;
-    var fNoLanggan = feature.properties.NO_LANGGAN;
-    var popupContent =
-        '<table>\
-<tr>\
-<th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI PELANGGAN </th>\
-</tr>\
-<tr>\
-<th scope="row">&nbsp; </th>\
-</tr>\
-<tr>\
-<th scope="row"></th>\
-</tr>\
-<tr>\
-<th scope="row">NAMA</th>\
-<td>' +
-        fNama +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">NO SAMBUNGAN</th>\
-<td>' +
-        fNoSambungan +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">NO LANGGANAN</th>\
-<td>' +
-        fNoLanggan +
-        "</td>\
-</tr>\
-</table>";
-
-    return popupContent;
-} // }}}
-
-function popUpSumurboor(feature, layer) {
-    // {{{
-    var popupContent = "";
-
-    var fPdam = feature.properties.PDAM;
-    var fNamaSumur = feature.properties.NAMA_SUMUR;
-    var popupContent =
-        '<table>\
-<tr>\
-<th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI SUMUR BOOR </th>\
-</tr>\
-<tr>\
-<th scope="row">&nbsp; </th>\
-</tr>\
-<tr>\
-<th scope="row"></th>\
-</tr>\
-<tr>\
-<th scope="row">PDAM</th>\
-<td>' +
-        fPdam +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">NAMA SUMUR</th>\
-<td>' +
-        fNamaSumur +
-        "</td>\
-</tr>\
-</table>";
-
-    return popupContent;
-} // }}}
-
-function popUpPipaPelayanan(feature, layer) {
-    // {{{
-    var popupContent = "";
-
-    // console.log(feature.properties);
-    var fPdam = feature.properties.PDAM;
-    var fUkuranPipa = feature.properties.UKURAN_PIP;
-    var fBahanPipa = feature.properties.BAHAN_PIPA;
-    var popupContent =
-        '<table>\
-<tr>\
-<th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI PIPA PELAYANAN </th>\
-</tr>\
-<tr>\
-<th scope="row">&nbsp; </th>\
-</tr>\
-<tr>\
-<th scope="row"></th>\
-</tr>\
-<tr>\
-<th scope="row">PDAM</th>\
-<td>' +
-        fPdam +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">UKURAN PIPA</th>\
-<td>' +
-        fUkuranPipa +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">BAHAN PIPA</th>\
-<td>' +
-        fBahanPipa +
-        "</td>\
-</tr>\
-</table>";
-
-    return popupContent;
-} // }}}
-
-function popUpPipaDist(feature, layer) {
-    // {{{
-    var popupContent = "";
-
-    // console.log(feature.properties);
-    var fPdam = feature.properties.PDAM;
-    var fUkuranPipa = feature.properties.UKURAN_PIP;
-    var fPanjangPipa = feature.properties.PANJANG_PIP;
-    var fBahanPipa = feature.properties.BAHAN_PIPA;
-    var popupContent =
-        '<table>\
-<tr>\
-<th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI PIPA DISTRIBUSI </th>\
-</tr>\
-<tr>\
-<th scope="row">&nbsp; </th>\
-</tr>\
-<tr>\
-<th scope="row"></th>\
-</tr>\
-<tr>\
-<th scope="row">PDAM</th>\
-<td>' +
-        fPdam +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">UKURAN PIPA</th>\
-<td>' +
-        fUkuranPipa +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">PANJANG PIPA</th>\
-<td>' +
-        fPanjangPipa +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">BAHAN PIPA</th>\
-<td>' +
-        fBahanPipa +
-        "</td>\
-</tr>\
-</table>";
-
-    return popupContent;
-} // }}}
-
-function popUpGateValve(feature, layer) {
-    // {{{
-    var popupContent = "";
-
-    // console.log(feature.properties);
-    var fPdam = feature.properties.PDAM;
-    var fNamaSumur = feature.properties.NAMA_SUMUR;
-    var fJalan = feature.properties.JALAN;
-    var popupContent =
-        '<table>\
-<tr>\
-<th scope="row" style="text-align:center" colspan="2"><div style="Arial; font-size:14px; color: blue"> INFORMASI GATE VALVE </th>\
-</tr>\
-<tr>\
-<th scope="row">&nbsp; </th>\
-</tr>\
-<tr>\
-<th scope="row"></th>\
-</tr>\
-<tr>\
-<th scope="row">PDAM</th>\
-<td>' +
-        fPdam +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">NAMA SUMUR</th>\
-<td>' +
-        fNamaSumur +
-        '</td>\
-</tr>\
-<tr>\
-<th scope="row">JALAN</th>\
-<td>' +
-        fJalan +
-        "</td>\
-</tr>\
-</table>";
-
-    return popupContent;
-} // }}}
-
-var panelLayers = new L.Control.PanelLayers(baseLayers, overLayers, {
-    // {{{
-    // compact:true,
-    // collapsed:true,
-    collapsibleGroups: true,
-    title: "PDAM MAPS",
-    // });
-}); // }}}
-
-m.addControl(panelLayers);
-kumpulanMarkers.addTo(m);
-m.spin(true);
-
 var polylineMeasure = L.control.polylineMeasure(options).addTo(m);
 
 m.on("polylinemeasure:finish", () => {
-    // {{{
     // let isiEnt = Object.entries(polylineMeasure._currentLine);
     let isiVal = Object.values(polylineMeasure._currentLine);
     let hasil = isiVal[5];
@@ -690,134 +399,33 @@ m.on("polylinemeasure:finish", () => {
     alert("jarak dari start - end adalah : " + Math.round(hasil) + " meter");
 }); // }}}
 
-// drawing
-// -----------
-var drawnItems = new L.FeatureGroup();
-m.addLayer(drawnItems);
-var drawControl = new L.Control.Draw({
-    // {{{
-    edit: {
-        featureGroup: drawnItems,
-        poly: {
-            allowIntersection: false,
-        },
-    },
-    draw: {
-        circle: false,
-        circlemarker: false,
-        polygon: {
-            allowIntersection: false,
-            showArea: true,
-        },
-    },
-}); // }}}
-m.addControl(drawControl);
+// {{{ fungsi showCoordinates
+function showCoordinates(e) {
+    // alert(e.latlng);
+    let lat = e.latlng.lat;
+    let long = e.latlng.lng;
+    // alert('lat: '+lat+', long: '+long)
+    // window.open('http://maps.google.com/maps?q=&layer=c&cbll='+lat+','+long+'&cbp=11,0,0,0,0', '_blank');
+    window.open(
+        "http://maps.google.com/maps?q=&layer=c&cbll=" +
+            lat +
+            "," +
+            long +
+            "&cbp=11,0,0,0,0"
+    );
+    // http://maps.google.com/maps?q=&layer=c&cbll=31.335198,-89.287204&cbp=11,0,0,0,0
+} // }}}
 
-// Truncate value based on number of decimals
-var _round = function (num, len) {
-    return Math.round(num * Math.pow(10, len)) / Math.pow(10, len);
-};
-// Helper method to format LatLng object (x.xxxxxx, y.yyyyyy)
-var strLatLng = function (latlng) {
-    return "(" + _round(latlng.lat, 6) + ", " + _round(latlng.lng, 6) + ")";
-};
-
-// Generate popup content based on layer type
-// - Returns HTML string, or null if unknown object
-var getPopupContent = function (layer) {
-    // {{{
-    // Marker - add lat/long
-    if (layer instanceof L.Marker || layer instanceof L.CircleMarker) {
-        return strLatLng(layer.getLatLng());
-        // Circle - lat/long, radius
-    } else if (layer instanceof L.Circle) {
-        var center = layer.getLatLng(),
-            radius = layer.getRadius();
-        return (
-            "Center: " +
-            strLatLng(center) +
-            "<br />" +
-            "Radius: " +
-            _round(radius, 2) +
-            " m"
-        );
-        // Rectangle/Polygon - area
-    } else if (layer instanceof L.Polygon) {
-        var latlngs = layer._defaultShape
-            ? layer._defaultShape()
-            : layer.getLatLngs(),
-            area = L.GeometryUtil.geodesicArea(latlngs);
-        return "Area: " + L.GeometryUtil.readableArea(area, true);
-        // Polyline - distance
-    } else if (layer instanceof L.Polyline) {
-        var latlngs = layer._defaultShape
-            ? layer._defaultShape()
-            : layer.getLatLngs(),
-            distance = 0;
-        if (latlngs.length < 2) {
-            return "Distance: N/A";
-        } else {
-            for (var i = 0; i < latlngs.length - 1; i++) {
-                distance += latlngs[i].distanceTo(latlngs[i + 1]);
-            }
-            if (_round(distance, 2) > 1000) {
-                return "Distance: " + _round(distance, 2) / 1000 + " km"; // kilometers
-            } else {
-                return "Distance: " + _round(distance, 2) + " m"; // meters
-            }
-        }
-    }
-    return null;
-}; // }}}
-
-// Object created - bind popup to layer, add to feature group
-m.on(L.Draw.Event.CREATED, function (event) {
-    // {{{
-    console.log(Object.entries(event));
-    var layer = event.layer;
-    // var content = getPopupContent(layer);
-    // if (content !== null) {
-    // 	layer.bindPopup(content);
-    // }
-
-    // // Add info to feature properties
-    // feature = layer.feature = layer.feature || {};
-    // feature.type = feature.type || 'Feature';
-    // var props = (feature.properties = feature.properties || {}); // Intialize feature.properties
-    // props.info = content;
-    drawnItems.addLayer(layer);
-    console.log(JSON.stringify(drawnItems.toGeoJSON()));
-}); // }}}
-
-// Object(s) edited - update popups
-m.on(L.Draw.Event.EDITED, function (event) {
-    // {{{
-    var layers = event.layers,
-        content = null;
-    // layers.eachLayer(function (layer) {
-    // 	content = getPopupContent(layer);
-    // 	if (content !== null) {
-    // 		layer.setPopupContent(content);
-    // 	}
-
-    // 	// Update info to feature properties
-    // 	var layer = layer;
-    // 	feature = layer.feature = layer.feature || {};
-    // 	var props = (feature.properties = feature.properties || {});
-    // 	props.info = content;
-    // });
-    console.log(JSON.stringify(drawnItems.toGeoJSON()));
-}); // }}}
-
-// Object(s) deleted - update console log
-m.on(L.Draw.Event.DELETED, function (event) {
-    console.log(JSON.stringify(drawnItems.toGeoJSON()));
-});
-
-// new L.control.search({
-//     layer: overLayers,
-//     initial: false,
-//     propertyName: "",
-// }).addTo(m);
+// {{{ enable disable layer
+pelanggan.addTo(m);
+/* m.addLayer(pelanggan); // snub */
+var layerAsli = L.control.layers(baseMaps, overlayMaps).addTo(m);
+// layerAsli.addOverlay(drawnItems, "<span class= 'ml-1'>drawnItems</span>"); // bisa
+layerAsli.addOverlay(
+    groupPelanggan,
+    "<span class= 'ml-2 mr-3'>Pelanggan</span>"
+);
+/* groupPelanggan.addTo(m); // untuk control di layer nya aktif atau tidak */
+// }}}
 
 // vim:fileencoding=utf-8:ft=javascript:foldmethod=marker

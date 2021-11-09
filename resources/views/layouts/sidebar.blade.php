@@ -64,58 +64,58 @@
             {{--            </div>--}}
 
             {{-- unit 1--}}
-@hasanyrole('Super Admin|roleUnit1|kepala')
+            @hasanyrole('Super Admin|roleUnit1|kepala|hl')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-red-500"
-               href="{{ url('situbondo') }}">Unit 1</a>
-@endhasanyrole
+               href="{{ url('arjasa') }}">Arjasa</a>
+            @endhasanyrole
 
             {{-- unit 2--}}
-@hasanyrole('Super Admin|roleUnit2|kepala')
+            @hasanyrole('Super Admin|roleUnit2|kepala|hl')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500"
-               href="{{ url('arjasa') }}">Unit 2</a>
-@endhasanyrole
+               href="{{ url('asembagus') }}">Asembagus</a>
+            @endhasanyrole
 
             {{-- unit 3--}}
-@hasanyrole('Super Admin|roleUnit3|kepala')
+            @hasanyrole('Super Admin|roleUnit3|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-yellow-500"
-               href="#">Unit 3</a>
-@endhasanyrole
+               href="{{ url('banyuputih') }}">Banyuputih</a>
+            @endhasanyrole
 
             {{-- unit 4--}}
-@hasanyrole('Super Admin|roleUnit4|kepala')
+            @hasanyrole('Super Admin|roleUnit4|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-indigo-500"
-               href="#">Unit 4</a>
-@endhasanyrole
+               href="{{ url('besuki') }}">Besuki</a>
+            @endhasanyrole
 
             {{-- unit 5--}}
-@hasanyrole('Super Admin|roleUnit5|kepala')
+            @hasanyrole('Super Admin|roleUnit5|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-pink-500"
-               href="#">Unit 5</a>
-@endhasanyrole
+               href="{{ url('kapongan') }}">Kapongan</a>
+            @endhasanyrole
 
             {{-- unit 6--}}
-@hasanyrole('Super Admin|roleUnit6|kepala')
+            @hasanyrole('Super Admin|roleUnit6|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-purple-500"
-               href="#">Unit 6</a>
-@endhasanyrole
+               href="{{ url('kendit') }}">Kendit</a>
+            @endhasanyrole
 
             {{-- unit 7--}}
-@hasanyrole('Super Admin|roleUnit7|kepala')
+            @hasanyrole('Super Admin|roleUnit7|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-yellow-300"
-               href="#">Unit 7</a>
-@endhasanyrole
+               href="{{ url('mangaran') }}">Mangaran</a>
+            @endhasanyrole
 
             {{-- unit 8--}}
-@hasanyrole('Super Admin|roleUnit8|kepala')
+            @hasanyrole('Super Admin|roleUnit8|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-300"
-               href="#">Unit 8</a>
-@endhasanyrole
+               href="{{ url('panarukan') }}">Panarukan</a>
+            @endhasanyrole
 
             {{-- unit 9--}}
-@hasanyrole('Super Admin|roleUnit9|kepala')
+            @hasanyrole('Super Admin|roleUnit9|kepala')
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-indigo-300"
-               href="#">Unit 9</a>
-@endhasanyrole
+               href="{{ url('situbondo') }}">Situbondo</a>
+            @endhasanyrole
 
             <form method="POST" action="{{ route('logout') }}"> @csrf <a
                     class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"

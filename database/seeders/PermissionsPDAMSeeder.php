@@ -193,6 +193,15 @@ class PermissionsPDAMSeeder extends Seeder
         ]);
         $unitArjasa->assignRole($roleUnit2);
 
+        $userHL = \App\Models\User::factory()->create([
+            'name' => 'Hubungan Pelanggan',
+            'firstname' => 'Hubungan Pelanggan',
+            'lastname' => 'PDAM',
+            'username' => 'hl',
+            'email' => 'hl@local.com',
+            'password' => bcrypt('hl12345678'),
+        ]);
+        $userHL->assignRole($roleKepala);
 
     }
 }

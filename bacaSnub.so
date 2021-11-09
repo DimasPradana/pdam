@@ -1,0 +1,2 @@
+# buat copy database dari local ke server
+pg_dump -C -h localhost -U localuser dbname | psql -h remotehost -U remoteuser dbname

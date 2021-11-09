@@ -69,8 +69,12 @@ class CekController extends Controller
 
     public function testDB()
     {
-        $hasils = DB::table("pipapelayanan_arjasa as a")
+        $hasils = DB::table("pipa as a")
             ->selectRaw("*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->where([
+              ['unit', '=','SITUBONDO'],
+            ])
+            ->whereIn('ukuran_pipa',['1','1.5','2','3','4','6','8','12'])
             ->get();
         /* ->toSql(); */
 
@@ -81,11 +85,11 @@ class CekController extends Controller
             unset($row->geometry);
             $feature = [
                 "type" => "Feature",
-                /* "name" => "arjasa-pipa-pelayanan", */
+                // "name" => "arjasa-pipa-pelayanan",
                 "properties" => $row,
                 "geometry" => $geometry,
             ];
-            /* echo json_encode($feature)."<br/><br/>"; */
+            // echo json_encode($feature)."<br/><br/>";
             array_push($features, $feature);
         }
 
@@ -107,6 +111,7 @@ class CekController extends Controller
         return view('peta/test', compact('featureCollection', 'testComment'));
 //        return $featureCollection;
     }
+
     public function testDB2()
     {
         $hasils = DB::table("pipapelayanan_arjasa as a")

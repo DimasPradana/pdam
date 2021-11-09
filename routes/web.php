@@ -28,21 +28,20 @@ use Illuminate\Support\Facades\Route;
 //})->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'CekController@index')->name('index');
-    Route::get('situbondo', 'CekController@situbondo')->name('situbondo');
-    Route::get('arjasa', 'CekController@arjasa')->name('arjasa');
-    Route::get('test', 'CekController@test')->name('test');
-    Route::get('testdb','CekController@testDB');
-    Route::get('testdb2','CekController@testDB2');
+    Route::get('/', 'allUnitController@index');
+    Route::get('arjasa', 'arjasaController@index')->name('arjasa');
+    Route::get('asembagus', 'asembagusController@index')->name('asembagus');
+    Route::get('banyuputih', 'banyuputihController@index')->name('banyuputih');
+    Route::get('besuki', 'besukiController@index')->name('besuki');
+    Route::get('jatibanteng', 'jatibantengController@index')->name('jatibanteng');
+    Route::get('kapongan', 'kaponganController@index')->name('kapongan');
+    Route::get('kendit', 'kenditController@index')->name('kendit');
+    Route::get('mangaran', 'mangaranController@index')->name('mangaran');
+    Route::get('panarukan', 'panarukanController@index')->name('panarukan');
+    Route::get('situbondo', 'situbondoController@index')->name('situbondo');
 
-    /* Route::get('marker', 'CekController@semuaMarker')->name('all.marker'); */
-    /* Route::get('polygon', 'CekController@semuaPolygon')->name('all.polygon'); */
-    /* Route::get('attribute', 'CekController@semuaAttribute')->name('all.attribute'); */
-    Route::get('peta', function(){
-        return view('peta');
-    })->name('peta');
+    /* Route::get('test', 'allUnitController@index'); */
 });
-
 
 
 require __DIR__ . '/auth.php';

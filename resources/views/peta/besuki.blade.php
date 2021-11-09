@@ -65,7 +65,7 @@
             window.pipa12 = {!! json_encode($pipa12) !!};
             window.pelanggan = {!! json_encode($pelanggan) !!};
         </script>
-        <script src="{{ URL::asset('public/js/peta/petaArjasa.js') }}"></script>
+        <script src="{{ URL::asset('public/js/peta/petaBesuki.js') }}"></script>
     @endpush
 
 
