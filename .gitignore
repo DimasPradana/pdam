@@ -5,4 +5,4 @@
 *.htaccess
 .idea
 .editorconfig
-.so
+*.so
