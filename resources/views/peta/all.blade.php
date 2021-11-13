@@ -31,7 +31,7 @@
         <script src="{{ URL::asset('public/js/leaflet.spin.min.js') }}"></script>
 
         <!-- feature group -->
-        <script src="{{ URL::asset('public/js/leaflet.featuregroup.subgroup-src.js') }}"></script>
+        <script src="{{ URL::asset('public/js/subgroup.js') }}"></script>
 
         <!-- street view -->
         <script src="{{ URL::asset('public/js/StreetViewButtons.js') }}"></script>
@@ -42,9 +42,9 @@
 
         <!-- search -->
         <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.css') }}"/>
-        <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.mobile.css') }}"/>
+        <!-- <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.mobile.css') }}"/> -->
         <script src="{{ URL::asset('public/js/leaflet-search.js') }}"></script>
-        <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script>
+        <!-- <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script> -->
 
     @endpush
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserModel;
 
-class besukiController extends Controller
+class jatibantengController extends Controller
 {
     // {{{ construct
     function __construct()
