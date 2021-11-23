@@ -72,13 +72,13 @@ class PermissionsPDAMSeeder extends Seeder
 /*     $roleAttribute->givePermissionTo('update attributes'); */
 /*     $roleAttribute->givePermissionTo('delete attributes'); */
     
-    $roleUnit1 = Role::create(['name' => 'roleUnit1']);
+    $roleUnit1 = Role::create(['name' => 'unitSitubondo']);
     $roleUnit1->givePermissionTo('situbondo.create');
     $roleUnit1->givePermissionTo('situbondo.read');
     $roleUnit1->givePermissionTo('situbondo.update');
     $roleUnit1->givePermissionTo('situbondo.delete');
 
-    $roleUnit2 = Role::create(['name' => 'roleUnit2']);
+    $roleUnit2 = Role::create(['name' => 'unitArjasa']);
     $roleUnit2->givePermissionTo('arjasa.create');
     $roleUnit2->givePermissionTo('arjasa.read');
     $roleUnit2->givePermissionTo('arjasa.update');
@@ -174,24 +174,34 @@ class PermissionsPDAMSeeder extends Seeder
 /*         $userAttributer->assignRole($roleAttribute); */
         
         $unitSitubondo = \App\Models\User::factory()->create([
-            'name' => 'Unit 1-Situbondo',
-            'firstname' => 'Unit 1',
+            'name' => 'Unit Situbondo',
+            'firstname' => 'Unit',
             'lastname' => 'Situbondo',
-            'username' => 'unit1',
-            'email' => 'unit1@local.com',
-            'password' => bcrypt('12345678'),
+            'username' => 'situbondo',
+            'email' => 'unitSitubondo@local.com',
+            'password' => bcrypt('sit12345678'),
         ]);
-        $unitSitubondo->assignRole($roleUnit1);
+        $unitSitubondo->assignRole($unitSitubondo);
         
         $unitArjasa = \App\Models\User::factory()->create([
-            'name' => 'Unit 1-Arjasa',
-            'firstname' => 'Unit 1',
+            'name' => 'Unit Arjasa',
+            'firstname' => 'Unit',
             'lastname' => 'Arjasa',
-            'username' => 'unit2',
-            'email' => 'unit2@local.com',
-            'password' => bcrypt('12345678'),
+            'username' => 'unitArjasa',
+            'email' => 'unitArjasa@local.com',
+            'password' => bcrypt('arj12345678'),
         ]);
-        $unitArjasa->assignRole($roleUnit2);
+        $unitArjasa->assignRole($unitArjasa);
+        
+        $unitBesuki = \App\Models\User::factory()->create([
+            'name' => 'Unit Besuki',
+            'firstname' => 'Unit',
+            'lastname' => 'Besuki',
+            'username' => 'unitBesuki',
+            'email' => 'unitBesuki@local.com',
+            'password' => bcrypt('bes12345678'),
+        ]);
+        $unitBesuki->assignRole($unitBesuki);
 
         $userHL = \App\Models\User::factory()->create([
             'name' => 'Hubungan Pelanggan',

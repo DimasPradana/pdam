@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 /**
  * TODO snub on Thu 23 Sep 2021 00:06:48
- * ᚛ kurang buat halaman untuk ganti dashboard (yang ada petanya)
- * ᚛ cari pelanggan dari marker
- * ᚛ buat 9 unit di overLayer
- * ᚛ edit polygon berdasarkan nama yang login
- * ᚛ edit marker berdasarkan nama yang login
- * ᚛ kalo pake database postgis ingat "ST_AsGeoJSON" untuk rubah format geometry jadi coordinate
+ * ᚛ kurang buat halaman untuk ganti dashboard (yang ada petanya) OK
+ * ᚛ cari pelanggan dari marker OK
+ * ᚛ buat 9 unit di overLayer OK
+ * ᚛ edit polygon berdasarkan nama yang login X
+ * ᚛ edit marker berdasarkan nama yang login X
+ * ᚛ kalo pake database postgis ingat "ST_AsGeoJSON" untuk rubah format geometry jadi coordinate OK
  */
 
 //Route::get('/dashboard', function () {

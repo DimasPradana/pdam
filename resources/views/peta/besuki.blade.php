@@ -53,7 +53,7 @@
     </div>
 
     @push('peta')
-        {{--    petanya--}}
+        {{--petanya--}}
         <script>
             window.pipa1 = {!! json_encode($pipa1) !!};
             window.pipa1Setengah = {!! json_encode($pipa1Setengah) !!};
@@ -66,7 +66,6 @@
             window.sumurboor = {!! json_encode($sumurboor) !!};
             {{--window.pelanggan = {!! json_encode($pelanggan) !!};--}}
         </script>
-        {{--        <script src="{{ URL::asset('public/js/peta/petaBesuki.js') }}"></script>--}}
         <script src="assets/petaBesuki.js"></script>
     @endpush
 

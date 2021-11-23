@@ -10,6 +10,8 @@ class besukiController extends Controller
     // {{{ construct
     function __construct()
     {
+        // $this->middleware('role_or_permission:Super Admin|unitBesuki|besuki.create|besuki.read|besuki.update|besuki.delete', ['only' => ['besuki']]);
+
         // TODO contoh kalo ambil data dari database
         $this->UserModel = new UserModel();
     } // }}}
