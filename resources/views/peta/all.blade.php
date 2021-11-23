@@ -42,9 +42,9 @@
 
         <!-- search -->
         <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.css') }}"/>
-        <!-- <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.mobile.css') }}"/> -->
+    <!-- <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.mobile.css') }}"/> -->
         <script src="{{ URL::asset('public/js/leaflet-search.js') }}"></script>
-        <!-- <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script> -->
+    <!-- <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script> -->
 
     @endpush
 
@@ -63,9 +63,10 @@
             window.pipa6 = {!! json_encode($pipa6) !!};
             window.pipa8 = {!! json_encode($pipa8) !!};
             window.pipa12 = {!! json_encode($pipa12) !!};
-            window.pelanggan = {!! json_encode($pelanggan) !!};
+            window.sumurboor = {!! json_encode($sumurboor) !!};
         </script>
-        <script src="{{ URL::asset('public/js/peta/petaAll.js') }}"></script>
+        {{-- <script src="{{ asset('public/js/peta/petaAll.js') }}"></script> --}}
+        <script src="assets/petaAll.js"></script>
     @endpush
 
 

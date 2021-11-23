@@ -39,8 +39,33 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mangaran', 'mangaranController@index')->name('mangaran');
     Route::get('panarukan', 'panarukanController@index')->name('panarukan');
     Route::get('situbondo', 'situbondoController@index')->name('situbondo');
+    Route::get('getAllPelanggan', 'allUnitController@getPelanggan')->name('getAllPelanggan');
+    Route::get('getArjasaPelanggan', 'arjasaController@getPelanggan')->name('getArjasaPelanggan');
+    Route::get('getAsembagusPelanggan', 'asembagusController@getPelanggan')->name('getAsembagusPelanggan');
+    Route::get('getBanyuputihPelanggan', 'banyuputihController@getPelanggan')->name('getBanyuputihPelanggan');
+    Route::get('getBesukiPelanggan', 'besukiController@getPelanggan')->name('getBesukiPelanggan');
+    Route::get('getJatibantengPelanggan', 'jatibantengController@getPelanggan')->name('getJatibantengPelanggan');
+    Route::get('getKaponganPelanggan', 'kaponganController@getPelanggan')->name('getKaponganPelanggan');
+    Route::get('getKenditPelanggan', 'kenditController@getPelanggan')->name('getKenditPelanggan');
+    Route::get('getMangaranPelanggan', 'mangaranController@getPelanggan')->name('getMangaranPelanggan');
+    Route::get('getPanarukanPelanggan', 'panarukanController@getPelanggan')->name('getPanarukanPelanggan');
+    Route::get('getSitubondoPelanggan', 'situbondoController@getPelanggan')->name('getSitubondoPelanggan');
 
     /* Route::get('test', 'allUnitController@index'); */
+});
+
+/* Route::get('/resources/views/peta/js/{filename}', function($filename){ */
+Route::get('/assets/{filename}', function ($filename) {
+    $path = resource_path() . '/js/peta/' . $filename;
+    if (!File::exists($path)) {
+        return response()->json(['message' => 'File not found.', 'path' => $path], 404);
+    }
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
 });
 
 

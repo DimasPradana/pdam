@@ -25,10 +25,12 @@ class mangaranController extends Controller
         $pipa6 = self::pipa6();
         $pipa8 = self::pipa8();
         $pipa12 = self::pipa12();
-        $pelanggan = self::pelanggan();
+        $sumurboor = self::sumurboor();
+        /* $pelanggan = self::pelanggan(); */
         /* dd($results); */
         /* return view('peta.test', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'pelanggan')); */
-        return view('peta.mangaran', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'pelanggan'));
+        /* return view('peta.mangaran', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'pelanggan')); */
+        return view('peta.mangaran', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'sumurboor'));
     } // }}}
 
     // {{{ pipa1
@@ -284,6 +286,45 @@ class mangaranController extends Controller
         ];
         /* dd($results); */
         return $featureCollection;
+    } // }}}
+
+    // {{{ sumurboor
+    public static function sumurboor()
+    {
+        $_sumurboor = DB::table('sumurboor as a')
+            /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
+            ->selectRaw("a.unit, a.nama_sumur, a.alamat_1, st_asgeojson(a.wkb_geometry) as geometry")
+            ->where('unit', '=', 'MANGARAN')
+            /* ->limit(10) */
+            ->get();
+        /* dd($_sumurboor); */
+        $features = [];
+        foreach ($_sumurboor as $row) {
+            unset($row->wkb_geometry);
+            $geometry = $row->geometry = json_decode($row->geometry);
+            unset($row->geometry);
+            $feature = [
+                "type" => "Feature",
+                "properties" => $row,
+                "geometry" => $geometry,
+            ];
+            array_push($features, $feature);
+        }
+        /* dd($results); */
+        $featureCollection = [
+            "type" => "FeatureCollection",
+            "features" => $features,
+        ];
+        /* dd($results); */
+        return $featureCollection;
+    } // }}}
+
+    // {{{ getPelanggan
+    public function getPelanggan()
+    {
+        $pelanggan = self::pelanggan();
+        // $pelanggan2 = self::pelanggan2();
+        return $pelanggan;
     } // }}}
 }
 

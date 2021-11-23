@@ -25,20 +25,24 @@ class allUnitController extends Controller
         $pipa6 = self::pipa6();
         $pipa8 = self::pipa8();
         $pipa12 = self::pipa12();
-        $pelanggan = self::pelanggan();
+//        $pelanggan = self::pelanggan();
+//        $pelanggan2 = self::pelanggan2();
+        $sumurboor = self::sumurboor();
         /* dd($results); */
         /* return view('peta.test', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'pelanggan')); */
-        return view('peta.all', compact('pipa1','pipa1Setengah', 'pipa2', 'pipa3','pipa4', 'pipa6', 'pipa8','pipa12', 'pelanggan'));
+//        return view('peta.all', compact('pipa1', 'pipa1Setengah', 'pipa2', 'pipa3', 'pipa4', 'pipa6', 'pipa8', 'pipa12', 'pelanggan', 'sumurboor'));
+        return view('peta.all', compact('pipa1', 'pipa1Setengah', 'pipa2', 'pipa3', 'pipa4', 'pipa6', 'pipa8', 'pipa12', 'sumurboor'));
     } // }}}
 
     // {{{ pipa1
-    public static function pipa1(){
+    public static function pipa1()
+    {
         $_pipa1 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['1'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['1'])
+            ->get();
         $features = [];
-          foreach ($_pipa1 as $row){
+        foreach ($_pipa1 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -48,7 +52,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -59,13 +63,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa1Setengah
-    public static function pipa1Setengah(){
+    public static function pipa1Setengah()
+    {
         $_pipa1Setengah = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['1.5'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['1.5'])
+            ->get();
         $features = [];
-          foreach ($_pipa1Setengah as $row){
+        foreach ($_pipa1Setengah as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -75,7 +80,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -86,13 +91,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa2
-    public static function pipa2(){
+    public static function pipa2()
+    {
         $_pipa2 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['2'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['2'])
+            ->get();
         $features = [];
-          foreach ($_pipa2 as $row){
+        foreach ($_pipa2 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -102,7 +108,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -113,13 +119,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa3
-    public static function pipa3(){
+    public static function pipa3()
+    {
         $_pipa3 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['3'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['3'])
+            ->get();
         $features = [];
-          foreach ($_pipa3 as $row){
+        foreach ($_pipa3 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -129,7 +136,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -140,13 +147,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa4
-    public static function pipa4(){
+    public static function pipa4()
+    {
         $_pipa4 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['4'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['4'])
+            ->get();
         $features = [];
-          foreach ($_pipa4 as $row){
+        foreach ($_pipa4 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -156,7 +164,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -167,13 +175,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa6
-    public static function pipa6(){
+    public static function pipa6()
+    {
         $_pipa6 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['6'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['6'])
+            ->get();
         $features = [];
-          foreach ($_pipa6 as $row){
+        foreach ($_pipa6 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -183,7 +192,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -194,13 +203,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa8
-    public static function pipa8(){
+    public static function pipa8()
+    {
         $_pipa8 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['8'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['8'])
+            ->get();
         $features = [];
-          foreach ($_pipa8 as $row){
+        foreach ($_pipa8 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -210,7 +220,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -221,13 +231,14 @@ class allUnitController extends Controller
     } // }}}
 
     // {{{ pipa12
-    public static function pipa12(){
+    public static function pipa12()
+    {
         $_pipa12 = DB::table('pipa as a')
-          ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
-          ->whereIn('ukuran_pipa', ['12'])
-          ->get();
+            ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry")
+            ->whereIn('ukuran_pipa', ['12'])
+            ->get();
         $features = [];
-          foreach ($_pipa12 as $row){
+        foreach ($_pipa12 as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -237,7 +248,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -249,15 +260,16 @@ class allUnitController extends Controller
 
     // {{{ pelanggan
     /* public static function pelanggan(){ */
-    public static function pelanggan(){
+    public static function pelanggan()
+    {
         $_pelanggan = DB::table('pelanggan as a')
-          /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
-          ->selectRaw("a.unit, a.no_sambung, a.no_langgan, a.namapelang, a.alamat, st_asgeojson(a.wkb_geometry) as geometry")
-          /* ->limit(10) */
-          ->get();
+            /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
+            ->selectRaw("a.unit, a.no_sambung, a.no_langgan, a.namapelang, a.alamat, st_asgeojson(a.wkb_geometry) as geometry")
+            /* ->limit(10) */
+            ->get();
         /* dd($results); */
         $features = [];
-          foreach ($_pelanggan as $row){
+        foreach ($_pelanggan as $row) {
             unset($row->wkb_geometry);
             $geometry = $row->geometry = json_decode($row->geometry);
             unset($row->geometry);
@@ -267,7 +279,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-          }
+        }
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",
@@ -276,6 +288,74 @@ class allUnitController extends Controller
         /* dd($results); */
         return $featureCollection;
     } // }}}
+
+//    // {{{ pelanggan2 not using array
+//    public static function pelanggan2(){
+//        $_pelanggan = DB::table('pelanggan as a')
+//          /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
+//          ->selectRaw("a.unit, a.no_sambung, a.no_langgan, a.namapelang, a.alamat, st_asgeojson(a.wkb_geometry) as geometry")
+//          /* ->limit(10) */
+//          ->get();
+//        /* dd($results); */
+//        $features = [];
+//          foreach ($_pelanggan as $row){
+//            unset($row->wkb_geometry);
+//            $geometry = $row->geometry = json_decode($row->geometry);
+//            unset($row->geometry);
+//            $feature = [
+//                "type" => "Feature",
+//                "properties" => $row,
+//                "geometry" => $geometry,
+//            ];
+//            array_push($features, $feature);
+//          }
+//        /* dd($results); */
+//        $featureCollection = [
+//            "type" => "FeatureCollection",
+//            "features" => $features,
+//        ];
+//        /* dd($results); */
+//        return $featureCollection;
+//    } // }}}
+
+    // {{{ sumurboor
+    public static function sumurboor()
+    {
+        $_sumurboor = DB::table('sumurboor as a')
+            /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
+            ->selectRaw("a.unit, a.nama_sumur, a.alamat_1, st_asgeojson(a.wkb_geometry) as geometry")
+            /* ->limit(10) */
+            ->get();
+        /* dd($_sumurboor); */
+        $features = [];
+        foreach ($_sumurboor as $row) {
+            unset($row->wkb_geometry);
+            $geometry = $row->geometry = json_decode($row->geometry);
+            unset($row->geometry);
+            $feature = [
+                "type" => "Feature",
+                "properties" => $row,
+                "geometry" => $geometry,
+            ];
+            array_push($features, $feature);
+        }
+        /* dd($results); */
+        $featureCollection = [
+            "type" => "FeatureCollection",
+            "features" => $features,
+        ];
+        /* dd($results); */
+        return $featureCollection;
+    } // }}}
+
+    // {{{ getPelanggan
+    public function getPelanggan()
+    {
+        $pelanggan = self::pelanggan();
+        // $pelanggan2 = self::pelanggan2();
+        return $pelanggan;
+    } // }}}
+
 }
 
 // vim:fileencoding=utf-8:ft=php:foldmethod=marker
