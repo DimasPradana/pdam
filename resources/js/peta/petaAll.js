@@ -594,7 +594,11 @@ customers.on("data:loaded", function () {
 // nama search
 var searchName = new L.Control.Search({
     layer: customerCluster,
+    initial: true,
+    autoType: true,
     collapsed: true,
+    //  autoCollapse: true,
+    //  autoCollapseTime: 1200,
     propertyName: "namapelang",
     textPlaceholder: "Cari Nama..",
     zoom: "19",
@@ -606,6 +610,30 @@ var searchName = new L.Control.Search({
             color: "#DC2626",
             opacity: 1,
         }, 
+    },
+    hideMarkerOnCollapse: true,
+});
+
+// no langgan search
+var searchLanggan = new L.Control.Search({
+    layer: customerCluster,
+    initial: true,
+    autoType: true,
+    collapsed: true,
+    //  autoCollapse: true,
+    //  autoCollapseTime: 1200,
+    propertyName: "no_langgan",
+    textPlaceholder: "Cari No Langgan",
+    zoom: "19",
+    marker: {
+        // icon: waterMeter,
+        icon: recBlue,
+        circle: {
+            radius: 20,
+            color: "#3B82F6",
+            opacity: 1,
+        },
+        animate: true,
     },
     hideMarkerOnCollapse: true,
 });
@@ -622,6 +650,7 @@ var searchName = new L.Control.Search({
 //         console.debug("lokasi collapsed, isi e: ", e);
 //     });
 m.addControl(searchName);
+m.addControl(searchLanggan);
 // m.addControl(searchSambungan);
 
 // }}}
