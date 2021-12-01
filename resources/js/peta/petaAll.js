@@ -549,7 +549,7 @@ function showCoordinates(e) {
 
 // {{{ searchControl
 
-var addresses = new L.GeoJSON.AJAX(
+let customers = new L.GeoJSON.AJAX(
     // "http://samid.net:8074/pdam/getAllPelanggan",
     window.location.href+"getAllPelanggan",
     {
@@ -570,7 +570,7 @@ var addresses = new L.GeoJSON.AJAX(
     }
 );
 
-var addressCluster = new L.markerClusterGroup({
+var customerCluster = new L.markerClusterGroup({
     showCoverageOnHover: true,
     chunkedLoading: true,
     chunkProgress: updateProgressBar,
@@ -586,14 +586,14 @@ var addressCluster = new L.markerClusterGroup({
     //     });
     // },
 }).addTo(m);
-// add addresses to markerClusterGroup
-addresses.on("data:loaded", function () {
-    addressCluster.addLayer(addresses);
+// add customers to markerClusterGroup
+customers.on("data:loaded", function () {
+    customerCluster.addLayer(customers);
 });
 
 // nama search
 var searchName = new L.Control.Search({
-    layer: addressCluster,
+    layer: customerCluster,
     collapsed: true,
     propertyName: "namapelang",
     textPlaceholder: "Cari Nama..",
@@ -609,6 +609,7 @@ var searchName = new L.Control.Search({
     },
     hideMarkerOnCollapse: true,
 });
+
 /* TODO  on Tue 23 Nov 2021 09:36:26 : untuk debug OK */
 // searchName
 //     .on("search:locationfound", function (e) {
@@ -621,6 +622,8 @@ var searchName = new L.Control.Search({
 //         console.debug("lokasi collapsed, isi e: ", e);
 //     });
 m.addControl(searchName);
+// m.addControl(searchSambungan);
+
 // }}}
 
 // {{{ enable disable layer

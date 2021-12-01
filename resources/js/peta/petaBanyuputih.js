@@ -359,8 +359,9 @@ var googleMaps = L.tileLayer(
 
 // {{{ initialize map to m variable
 var m = L.map("mapid", {
-    center: [-7.700935688163334, 114.02025856339858],
-    zoom: 11,
+    // center: [-7.700935688163334, 114.02025856339858],
+    center: [-7.765166, 114.263430],
+    zoom: 15,
     layers: [googleMaps],
     contextmenu: true,
     contextmenuWidth: 140,

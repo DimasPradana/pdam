@@ -42,8 +42,11 @@
 
         <!-- search -->
         <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.css') }}"/>
+        <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet.fusesearch.css') }}"/>
     <!-- <link rel="stylesheet" href="{{ URL::asset('public/css/leaflet-search.mobile.css') }}"/> -->
         <script src="{{ URL::asset('public/js/leaflet-search.js') }}"></script>
+        <script src="{{ URL::asset('public/js/leaflet.fusesearch.js') }}"></script>
+        <script src="{{ URL::asset('public/js/fuse.js') }}"></script>
     <!-- <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script> -->
 
     @endpush

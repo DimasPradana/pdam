@@ -129,7 +129,7 @@ class PermissionsPDAMSeeder extends Seeder
             'lastname' => 'PDAM',
             'username' => 'direktur',
             'email' => 'kepala@local.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('dir12345678'),
         ]);
         $userKepala->assignRole($roleKepala);
 
