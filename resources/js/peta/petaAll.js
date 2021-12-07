@@ -547,11 +547,30 @@ function showCoordinates(e) {
     // http://maps.google.com/maps?q=&layer=c&cbll=31.335198,-89.287204&cbp=11,0,0,0,0
 } // }}}
 
+// {{{ find my location
+const loc = L.control.locate({
+    position: "topleft",
+    strings: {
+        title: "Find my location",
+    },
+    flyTo: true,
+    showCompas: true,
+});
+m.addControl(
+    L.control.locate({
+        locateOptions: {
+            maxZoom: 18,
+            enableHighAccuracy: true,
+        },
+    })
+);
+// }}}
+
 // {{{ searchControl
 
 let customers = new L.GeoJSON.AJAX(
     // "http://samid.net:8074/pdam/getAllPelanggan",
-    window.location.href+"getAllPelanggan",
+    window.location.href + "getAllPelanggan",
     {
         pointToLayer: function (feature, latlng) {
             var marker = L.marker(latlng, { icon: waterMeter });
@@ -609,7 +628,7 @@ var searchName = new L.Control.Search({
             radius: 20,
             color: "#DC2626",
             opacity: 1,
-        }, 
+        },
     },
     hideMarkerOnCollapse: true,
 });

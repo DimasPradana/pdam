@@ -46,6 +46,10 @@
         <script src="{{ URL::asset('public/js/leaflet-search.js') }}"></script>
         {{--        <script src="{{ URL::asset('public/js/leaflet-search-geocoder.js') }}"></script>--}}
 
+        <!-- find my location -->
+        <link rel="stylesheet" href="{{ URL::asset('public/css/L.Control.Locate.min.css') }}"/>
+        <script src="{{ URL::asset('public/js/L.Control.Locate.min.js') }}"></script>
+
     @endpush
 
     <div class="bg-white dark:bg-red-600 overflow-hidden shadow-sm sm:rounded-lg">
