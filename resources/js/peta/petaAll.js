@@ -51,7 +51,8 @@ var jsonSumurboor = window.sumurboor;
 // {{{ progres bar di console
 let progress;
 function updateProgressBar(processed, total, elapsed) {
-    if (elapsed > 1000) {
+    // if (elapsed > 1000) {
+    if (elapsed > 10) {
         // if it takes more than a second to load, display the progress bar:
         progress = Math.round((processed / total) * 100) + "%";
         console.debug("me-load data pelanggan: ", progress);
@@ -59,7 +60,13 @@ function updateProgressBar(processed, total, elapsed) {
 
     if (processed === total) {
         // all pelanggan processed - hide the progress bar:
-        console.debug("data pelanggan berhasil di load: ", processed);
+        console.debug(
+            "data pelanggan berhasil di load: ",
+            processed,
+            "dengan waktu: ",
+            elapsed,
+            "ms"
+        );
     }
 } // }}}
 
@@ -568,12 +575,14 @@ m.addControl(
 
 // {{{ searchControl
 
+// {{{ load customer
+// console.debug("start creating markers: " + window.performance.now());
 let customers = new L.GeoJSON.AJAX(
     // "http://samid.net:8074/pdam/getAllPelanggan",
     window.location.href + "getAllPelanggan",
     {
         pointToLayer: function (feature, latlng) {
-            var marker = L.marker(latlng, { icon: waterMeter });
+            let marker = L.marker(latlng, { icon: waterMeter });
             // marker.bindPopup(feature.properties.namapelang);
             marker.bindPopup(
                 popUpPelanggan(
@@ -586,30 +595,60 @@ let customers = new L.GeoJSON.AJAX(
             );
             return marker;
         },
+        // pointToLayer: function (feature, latlng) {
+        //     // chunking the data
+        //     for (let i = 0; i < feature.properties.length; i++) {
+        //         let marker = L.marker(latlng, { icon: waterMeter
+        //         }); console.debug("dari chunked: ",
+        //         feature.properties); marker.bindPopup(
+        //             popUpPelanggan(
+        //                 feature.properties[i].namapelang,
+        //                 feature.properties[i].no_sambung,
+        //                 feature.properties[i].no_langgan,
+        //                 feature.properties[i].alamat,
+        //                 feature.properties[i].unit
+        //             )
+        //         );
+        //         return marker;
+        //     }
+        // },
     }
-);
+)
+    .on("data:loading", function (e) {
+        // console.debug("data loading..", e);
+        console.debug("time on loading: ", window.performance.now());
+    })
+    .on("data:progress", function (e) {
+        // console.debug("data progress: ", e.features.length);
+        console.debug("time while progress: ", window.performance.now());
+    })
+    .on("data:loaded", function (e) {
+        // console.debug("data loaded: ", e);
+        console.debug("time on loaded: ", window.performance.now());
+        customerCluster.addLayer(customers);
+    });
 
 var customerCluster = new L.markerClusterGroup({
     showCoverageOnHover: true,
     chunkedLoading: true,
-    chunkProgress: updateProgressBar,
-    // iconCreateFunction: function (cluster) {
-    //     // var markers = cluster.getAllChildMarkers();
-    //     // var n = 0;
-    //     var n = 5;
-    //     // style clusters invisivle
-    //     return L.divIcon({
-    //         html: n,
-    //         className: "mycluster",
-    //         iconSize: L.point(0, 0),
-    //     });
-    // },
-}).addTo(m);
-// add customers to markerClusterGroup
-customers.on("data:loaded", function () {
-    customerCluster.addLayer(customers);
+    chunkedInterval: 200,
+    chunkedDelay: 50,
+    // chunkProgress: updateProgressBar,
+    // }).addTo(m); // coba di chunkProgress
 });
 
+// add customers to markerClusterGroup
+// customers.on("data:loading", function () {
+//     console.debug("data loading..");
+// });
+// customers.on("data:progrress", function (e) {
+//     console.debug("data progress :", e);
+// });
+// customers.on("data:loaded", function () {
+//     customerCluster.addLayer(customers);
+// }); // }}}
+
+// {{{ searchControl
 // nama search
 var searchName = new L.Control.Search({
     layer: customerCluster,
@@ -669,8 +708,7 @@ var searchLanggan = new L.Control.Search({
 //         console.debug("lokasi collapsed, isi e: ", e);
 //     });
 m.addControl(searchName);
-m.addControl(searchLanggan);
-// m.addControl(searchSambungan);
+m.addControl(searchLanggan); // }}}
 
 // }}}
 
