@@ -262,8 +262,8 @@ class allUnitController extends Controller
     /* public static function pelanggan(){ */
     public static function pelanggan()
     {
-        $_pelanggan = DB::table('pelanggan as a')
-            /* ->selectRaw("a.*, st_asgeojson(a.wkb_geometry) as geometry") */
+        // $_pelanggan = DB::table('pelanggan as a')
+        $_pelanggan = DB::table('pelanggan_susulan as a') // pakai pelanggan susulan dari pras
             ->selectRaw("a.unit, a.no_sambung, a.no_langgan, a.namapelang, a.alamat, st_asgeojson(a.wkb_geometry) as geometry")
             /* ->limit(10) */
             ->get();
@@ -279,7 +279,7 @@ class allUnitController extends Controller
                 "geometry" => $geometry,
             ];
             array_push($features, $feature);
-        }
+        };
         /* dd($results); */
         $featureCollection = [
             "type" => "FeatureCollection",

@@ -68,5 +68,4 @@ Route::get('/assets/{filename}', function ($filename) {
     return $response;
 });
 
-
 require __DIR__ . '/auth.php';
